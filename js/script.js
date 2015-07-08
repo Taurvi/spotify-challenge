@@ -1,3 +1,4 @@
-/**
- * Created by iguest on 7/7/15.
- */
+// Debug Function
+var debugMsg = function(msg) {
+    console.log("DEBUG: " + msg);
+};
