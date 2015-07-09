@@ -30,30 +30,33 @@
 
 </head>
 <body>
-    <main class="container-fluid" ng-app="spotifyApp">
-        <div class="text-center"><h1>Cool Spotify App - Under Construction</h1><br/>
-            <i class="fa fa-spotify fa-5x fa-spin"></i><br/>
-            <h6>SOON&trade;</h6>
-        </div>
-        <div class="center-block" id="container-initial">
-            <form class="form text-center" role="form">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>
-                        <input type="text" class="form-control" placeholder="Enter your name here!"></input>
-                    </div>
+<main class="container-fluid" ng-app="spotifyApp">
+    <div class="text-center"><h1>Cool Spotify App - Under Construction</h1><br/>
+        <i class="fa fa-spotify fa-5x fa-spin"></i><br/>
+        <h6>SOON&trade;</h6>
+    </div>
+    <form class="form text-center" role="form">
+        <div class="row">
+            <div class="col-xs-5 form-group center-block">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>
+                    <input type="text" class="form-control" placeholder="Name"></input>
                 </div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-default btn-lg">
-                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play Game
-                    </button>
-                    <button type="button" class="btn btn-default btn-lg">
-                        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Top Scores
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
-    </main>
+        <div class="row">
+            <div class="col-xs-5 center-block">
+                <button type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play Game
+                </button>
+                <button type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Top Scores
+                    </button>
+            </div>
+        </div>
+    </form>
+
+</main>
 </body>
 </html>
 

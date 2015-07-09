@@ -1,4 +1,10 @@
-#container-initial {
-    display: block;
-    width: 30%;
+@import url(http://fonts.googleapis.com/css?family=Hind);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+
+body {
+    font-family: "Hind", sans-serif;
+}
+
+.center-block {
+    float: none;
 }
