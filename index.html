@@ -37,30 +37,29 @@
     </div>
     <form class="form text-center" role="form" name="formSetup" ng-show="gameActive == false" novalidate="true">
         <div class="row">
-            <div class="col-xs-5 form-group center-block" ng-class="{'has-error' : checkUserInvalid(), 'has-success' : formSetup.username.$valid && formSetup.username.$touched}">
+            <div class="col-xs-5 form-group center-block" ng-class="{'has-error' : checkUserInvalid(), 'has-success' : checkUserValid()}">
                 <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>
                     <input type="text" class="form-control" placeholder="Name" name="username" ng-model="inputName" ng-minlength="5" ng-required="true" title="Test"></input>
                     <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="checkUserInvalid()"></span>
                     <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="formSetup.username.$valid && formSetup.username.$touched"></span>
                 </div>
-                <span class="error-text" ng-show="checkUserInvalid()">Username must be at least 5 characters.</span>
+                <span ng-hide="checkUserValid() || checkUserInvalid()"><i class="fa fa-user-secret"></i> Welcome, please enter a name!</span>
+                <span ng-show="checkUserValid()"><i class="fa fa-user-secret"></i> Hello {{inputName}}. Are you ready to get started?</span>
+                <span class="error-text" ng-show="checkUserInvalid()"><i class="fa fa-exclamation-triangle"></i> Username must be at least 5 characters.</span>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-5 center-block">
-                <button type="button" class="btn btn-default btn-lg" ng-click="startGame()">
+                <button type="button" class="btn btn-default btn-lg" ng-click="startGame()" ng-disabled="(checkUserInvalid() || !formSetup.username.length) && !checkUserValid()" ng-class="{'btn-success' : (!checkUserInvalid() || formSetup.username.length) && checkUserValid()}">
                     <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play Game
                 </button>
-                <button type="button" class="btn btn-default btn-lg">
+                <button type="button" class="btn btn-default btn-lg btn-primary">
                     <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Top Scores
                     </button>
             </div>
         </div>
     </form>
-
-    <div id="testElement" class="text-center" ng-hide="inputName === undefined || inputName === ''">Welcome, {{inputName}}.</div>
-
 </main>
 </body>
 </html>

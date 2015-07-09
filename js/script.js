@@ -10,14 +10,12 @@ if (debugMode)
     debugMsg('Debug Mode Active!')
 
 // Global Vars
-var userName;
-var gameActive;
 
 // Create Angular App
 var ngApp = angular.module('spotifyApp', []);
 
 // Creates Controller
-ngApp.controller('primary', ['$scope', function($scope) {
+ngApp.controller('primary', ['$scope', '$http', function($scope, $http) {
     $scope.userName = false;
     $scope.gameActive = false;
 
@@ -34,6 +32,10 @@ ngApp.controller('primary', ['$scope', function($scope) {
             return (!$scope.formSetup.username.$dirty || ($scope.formSetup.username.$error.minlength || $scope.formSetup.username.$invalid));
         }
         debugMsg('CheckUserValid did not trigger!');
+    }
+
+    $scope.checkUserValid = function() {
+        return ($scope.formSetup.username.$valid && $scope.formSetup.username.$touched);
     }
 }]);
 
