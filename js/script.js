@@ -27,7 +27,14 @@ ngApp.controller('primary', ['$scope', function($scope) {
         $scope.userName = $scope.inputName;
     };
 
-    $scope.checkUserValid = function() {
-        return ($scope.formSetup.username.$error.minlength || ($scope.formSetup.username.$touched && !$scope.formSetup.username.$dirty));
+    $scope.checkUserInvalid = function() {
+        if (!$scope.formSetup.username.$touched) {
+            return false;
+        } else {
+            return (!$scope.formSetup.username.$dirty || ($scope.formSetup.username.$error.minlength || $scope.formSetup.username.$invalid));
+        }
+        debugMsg('CheckUserValid did not trigger!');
     }
 }]);
+
+// Kinda works: return (() || ($scope.formSetup.username.$touched && ));

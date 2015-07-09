@@ -37,13 +37,14 @@
     </div>
     <form class="form text-center" role="form" name="formSetup" ng-show="gameActive == false" novalidate="true">
         <div class="row">
-            <div class="col-xs-5 form-group center-block" ng-class="{'has-error' : checkUserValid(), 'has-success' : formSetup.username.$valid && formSetup.username.$touched}">
+            <div class="col-xs-5 form-group center-block" ng-class="{'has-error' : checkUserInvalid(), 'has-success' : formSetup.username.$valid && formSetup.username.$touched}">
                 <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>
-                    <input type="text" class="form-control" placeholder="Name" name="username" ng-model="inputName" ng-minlength="5" title="Test"></input>
-                    <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="checkUserValid()"></span>
+                    <input type="text" class="form-control" placeholder="Name" name="username" ng-model="inputName" ng-minlength="5" ng-required="true" title="Test"></input>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="checkUserInvalid()"></span>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="formSetup.username.$valid && formSetup.username.$touched"></span>
                 </div>
-                <span class="error-text" ng-show="checkUserValid()">Username must be at least 5 characters.</span>
+                <span class="error-text" ng-show="checkUserInvalid()">Username must be at least 5 characters.</span>
             </div>
         </div>
         <div class="row">
