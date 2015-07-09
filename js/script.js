@@ -14,5 +14,5 @@ var ngApp = angular.module('spotifyApp', []);
 
 // Creates Controller
 ngApp.controller('changeSearchImg', function($scope) {
-   $scope.serachType = 'search-artist';
+    $scope.searchType = 'search-artist';
 });

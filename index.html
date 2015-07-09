@@ -35,21 +35,25 @@
             <i class="fa fa-spotify fa-5x fa-spin"></i><br/>
             <h6>SOON&trade;</h6>
         </div>
-        <form class="form-inline text-center" role="form" ng-controller="changeSearchImg">
-            <div class="form-group">
-                <label for="search-type">How would you like to search? </label>
-                <select id="search-type" ng-model="serachType" class="form-control">
-                    <option value="search-artist">Artist</option>
-                    <option value="search-album">Album</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                    <input type="text" class="form-control"></input>
+        <div class="center-block" id="container-initial">
+            <form class="form text-center" role="form">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>
+                        <input type="text" class="form-control" placeholder="Enter your name here!"></input>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default btn-lg">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play Game
+                    </button>
+                    <button type="button" class="btn btn-default btn-lg">
+                        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Top Scores
+                    </button>
+                </div>
+            </form>
+        </div>
     </main>
 </body>
 </html>
+

@@ -1,0 +1,22 @@
+<form class="form-inline text-center" role="form" ng-controller="changeSearchImg">
+    <div class="form-group">
+        <label for="search-type">How would you like to randomize? </label>
+        <select id="search-type" ng-model="searchType" class="form-control">
+            <option value="search-artist">Artist</option>
+            <option value="search-top100">Top 100</option>
+            <option value="search-genre">Genre</option>
+            <option value="search-random">????</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon"><i ng-class="{
+            'fa fa-user' : searchType == 'search-artist',
+             'fa fa-star-o' : searchType == 'search-top100',
+              'fa fa-server' : searchType == 'search-genre',
+               'fa fa-rocket' : searchType == 'search-random'
+               }"></i></div>
+            <input type="text" class="form-control"></input>
+        </div>
+    </div>
+</form>
