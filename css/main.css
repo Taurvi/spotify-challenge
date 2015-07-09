@@ -1,3 +1,6 @@
+/*
+ * Fixes problem with Bootstrap not centering
+ */
 .center-block {
     float: none;
 }

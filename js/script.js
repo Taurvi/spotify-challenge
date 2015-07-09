@@ -15,4 +15,15 @@ var ngApp = angular.module('spotifyApp', []);
 // Creates Controller
 ngApp.controller('changeSearchImg', function($scope) {
     $scope.searchType = 'search-artist';
+
+    $scope.checkName = function() {
+        var trueFalse = false;
+        debugMsg('checkName activated.');
+        if (!$scope.inputName)
+            trueFalse = false;
+        else
+            trueFalse = true
+
+        return trueFalse;
+    }
 });

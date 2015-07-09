@@ -40,7 +40,7 @@
             <div class="col-xs-5 form-group center-block">
                 <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>
-                    <input type="text" class="form-control" placeholder="Name"></input>
+                    <input type="text" class="form-control" placeholder="Name" ng-model="inputName"></input>
                 </div>
             </div>
         </div>
@@ -55,6 +55,8 @@
             </div>
         </div>
     </form>
+
+    <div id="testElement" class="text-center" ng-hide="inputName === undefined">Welcome, {{inputName}}.</div>
 
 </main>
 </body>
