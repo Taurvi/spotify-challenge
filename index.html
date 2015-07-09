@@ -30,23 +30,25 @@
 
 </head>
 <body>
-<main class="container-fluid" ng-app="spotifyApp">
+<main class="container-fluid" ng-app="spotifyApp" ng-controller="primary">
     <div class="text-center"><h1>Cool Spotify App - Under Construction</h1><br/>
         <i class="fa fa-spotify fa-5x fa-spin"></i><br/>
         <h6>SOON&trade;</h6>
     </div>
-    <form class="form text-center" role="form">
+    <form class="form text-center" role="form" name="formSetup" ng-show="gameActive == false" novalidate="true">
         <div class="row">
-            <div class="col-xs-5 form-group center-block">
+            <div class="col-xs-5 form-group center-block" ng-class="{'has-error' : checkUserValid(), 'has-success' : formSetup.username.$valid && formSetup.username.$touched}">
                 <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>
-                    <input type="text" class="form-control" placeholder="Name" ng-model="inputName"></input>
+                    <input type="text" class="form-control" placeholder="Name" name="username" ng-model="inputName" ng-minlength="5" title="Test"></input>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="checkUserValid()"></span>
                 </div>
+                <span class="error-text" ng-show="checkUserValid()">Username must be at least 5 characters.</span>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-5 center-block">
-                <button type="button" class="btn btn-default btn-lg">
+                <button type="button" class="btn btn-default btn-lg" ng-click="startGame()">
                     <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play Game
                 </button>
                 <button type="button" class="btn btn-default btn-lg">
