@@ -10,7 +10,9 @@ if (debugMode)
     debugMsg('Debug Mode Active!')
 
 // Global Vars
-var dataArtistList;
+var rawGArtistList;
+var rawTop10;
+var checkNewList;
 
 // Create Angular App
 var ngApp = angular.module('spotifyApp', ['spotify']);
@@ -20,7 +22,7 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
     $scope.userName = false;
     $scope.gameActive = false;
     $scope.audioObject = {};
-    $scope.artistList = {};
+    $scope.rawArtistList;
 
     // When game start is clicked
     $scope.startGame = function() {
@@ -43,24 +45,22 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
 
     //Query by Artist
     $scope.searchArtist = function() {
-        Spotify.search($scope.inputArtist, 'artist').then( function(data) {
-            data.forEach(function(artist) {
-                var top10 = [];
+        Spotify.search($scope.inputArtist, 'artist', {limit: 10}).then( function(data) {
+            $scope.rawArtistList = data.artists.items;
+            rawGArtistList = $scope.rawArtistList;
 
+            var newArtistList = [];
+
+            var holdTop10 = [];
+            $scope.rawArtistList.map(function(artist) {
                 Spotify.getArtistTopTracks(artist.id, 'US').then(function (data) {
-                    top10 = data.tracks;
+                    if (data.length == 10) {
+                        artist['top10'] = data;
+                        newArtistList.push(artist);
+                    };
                 });
-
-                $scope.artistList = {
-                    name: data.artists.items.name,
-                    id: data.artists.items.id,
-                    top10: top10
-                };
-
-                dataArtistList = $scope.artistList;
-
             })
-
+            checkNewList = newArtistList;
         });
     }
 }]);
