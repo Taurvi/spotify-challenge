@@ -38,33 +38,41 @@
         <i class="fa fa-spotify fa-5x fa-spin"></i><br/>
         <h6>SOON&trade;</h6>
     </div>
-    <form class="form text-center" role="form" name="formSetup" ng-show="gameActive == false" novalidate="true">
+
+    <div class="text-center center-block" id="info-box">
+        <h4 class="text-info" ng-hide="checkUserValid() || checkUserInvalid()"><i class="fa fa-user-secret"></i> Welcome, please enter a name!</h4>
+        <h4 class="text-success" ng-show="checkUserValid() && gameState == 'inactive'"><i class="fa fa-user-secret"></i> Hello {{inputName}}. Are you ready to get started?</h4>
+        <h4 class="error-text" ng-show="checkUserInvalid() && gameState == 'inactive'"><i class="fa fa-exclamation-triangle"></i> Username must be at least 5 characters.</h4>
+        <h4 class="text-info" ng-show="gameState == 'setup' && showInfo == false"><i class="fa fa-user-secret"></i> Please select an artist.</h4>
+        <h4 class="text-success" ng-show="gameState == 'setup' && showInfo == true"><i class="fa fa-user-secret"></i> You have selected: {{selectedArtist}}! Let's begin!</h4>
+    </div>
+
+    <!-- gameState == Active -->
+    <form class="form text-center" role="form" name="formSetup" ng-show="gameState == 'inactive'" novalidate="true">
         <div class="row">
             <div class="col-xs-5 form-group center-block" ng-class="{'has-error' : checkUserInvalid(), 'has-success' : checkUserValid()}">
                 <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-user-plus"></i></div>
-                    <input type="text" class="form-control" placeholder="Name" name="username" ng-model="inputName" ng-minlength="5" ng-required="true" title="Test">
+                    <input type="text" class="form-control" placeholder="Name" name="username" ng-model="inputName" ng-minlength="5" title="Test" required>
                     <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="checkUserInvalid()"></span>
                     <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="formSetup.username.$valid && formSetup.username.$touched"></span>
                 </div>
-                <span ng-hide="checkUserValid() || checkUserInvalid()"><i class="fa fa-user-secret"></i> Welcome, please enter a name!</span>
-                <span ng-show="checkUserValid()"><i class="fa fa-user-secret"></i> Hello {{inputName}}. Are you ready to get started?</span>
-                <span class="error-text" ng-show="checkUserInvalid()"><i class="fa fa-exclamation-triangle"></i> Username must be at least 5 characters.</span>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-5 center-block">
                 <button type="button" class="btn btn-default btn-lg" ng-click="startGame()" ng-disabled="(checkUserInvalid() || !formSetup.username.length) && !checkUserValid()" ng-class="{'btn-success' : (!checkUserInvalid() || formSetup.username.length) && checkUserValid()}">
-                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play Game
+                    <span class="glyphicon glyphicon-play"></span> Play Game
                 </button>
                 <button type="button" class="btn btn-default btn-lg btn-primary">
-                    <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Top Scores
+                    <span class="glyphicon glyphicon-sort-by-attributes"></span> Top Scores
                     </button>
             </div>
         </div>
     </form>
 
-    <form class="form text-center" role="form" name="formSearchArtist" ng-show="gameActive == true" novalidate="true">
+    <!-- gameState == Setup -->
+    <form class="form text-center" role="form" name="formSearchArtist" ng-show="gameState == 'setup'" novalidate="true">
         <div class="row">
             <div class="col-xs-5 form-group center-block">
                 <div class="input-group">
@@ -73,12 +81,24 @@
                 </div>
             </div>
         </div>
-        <ul>
-            <li ng-repeat="element in rawArtistList">
-                {{element.name}}
-            </li>
-        </ul>
 
+        <div id="start-button" ng-show="gameState == 'setup' && showInfo == true">
+            <button type="button" class="btn btn-default btn-lg" ng-click="startGame()" ng-disabled="(checkUserInvalid() || !formSetup.username.length) && !checkUserValid()" ng-class="{'btn-success' : (!checkUserInvalid() || formSetup.username.length) && checkUserValid()}">
+                <span class="glyphicon glyphicon-play"></span> Start Game
+            </button>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-5 form-group center-block">
+                <table class="table-responsive table-striped table-bordered" id="artist-select">
+                    <tr ng-repeat="element in dispArtistList" ng-click="artistSelected(element.name, element.id)" ng-class="{ 'selectedRow' : element.id == selectedArtistedId }" ng-show="!formSearchArtist.searchArtist.$error.required">
+                        <td>
+                            {{element.name}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </form>
 </main>
 </body>

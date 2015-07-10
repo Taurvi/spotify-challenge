@@ -8,3 +8,29 @@
 .error-text {
     color: red;
 }
+
+.progress, .noPadMar {
+    padding: 0;
+    margin: 0;
+}
+
+.selectedRow{
+    background-color: #A6F5A6  !important;
+}
+
+td, th {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+#info-box {
+    padding: 15px;
+}
+
+#artist-select {
+    width: 100%;
+}
+
+#start-button {
+    margin-bottom: 15px;
+}
