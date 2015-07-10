@@ -10,24 +10,17 @@ if (debugMode)
     debugMsg('Debug Mode Active!')
 
 // Global Vars
+var dataArtistList;
 
 // Create Angular App
 var ngApp = angular.module('spotifyApp', ['spotify']);
 
 // Creates Controller
-ngApp.controller('primary', ['$scope', '$http', function($scope, $http) {
-    app.config(function (SpotifyProvider) {
-        SpotifyProvider.setClientId('e9a7c84eb4d1413ea673caabdf6c4106');
-        SpotifyProvider.setRedirectUri('<CALLBACK_URI>');
-        SpotifyProvider.setScope('<SCOPE>');
-        // If you already have an auth token
-        SpotifyProvider.setAuthToken('<AUTH_TOKEN>');
-    });
-
+ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $http, Spotify) {
     $scope.userName = false;
     $scope.gameActive = false;
     $scope.audioObject = {};
-    $scope.featuredUrl = 'https://api.spotify.com/v1/browse/featured-playlists';
+    $scope.artistList = {};
 
     // When game start is clicked
     $scope.startGame = function() {
@@ -46,6 +39,29 @@ ngApp.controller('primary', ['$scope', '$http', function($scope, $http) {
 
     $scope.checkUserValid = function() {
         return ($scope.formSetup.username.$valid && $scope.formSetup.username.$touched);
+    }
+
+    //Query by Artist
+    $scope.searchArtist = function() {
+        Spotify.search($scope.inputArtist, 'artist').then( function(data) {
+            data.forEach(function(artist) {
+                var top10 = [];
+
+                Spotify.getArtistTopTracks(artist.id, 'US').then(function (data) {
+                    top10 = data.tracks;
+                });
+
+                $scope.artistList = {
+                    name: data.artists.items.name,
+                    id: data.artists.items.id,
+                    top10: top10
+                };
+
+                dataArtistList = $scope.artistList;
+
+            })
+
+        });
     }
 }]);
 

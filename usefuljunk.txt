@@ -20,3 +20,5 @@
         </div>
     </div>
 </form>
+
+<img ng-src="{{element.images[2].url}}">
