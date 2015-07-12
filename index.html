@@ -38,7 +38,7 @@
     </div>
 
     <div class="text-center center-block" id="info-box">
-        <h4 class="text-info" ng-hide="checkUserValid() || checkUserInvalid()"><i class="fa fa-user-secret"></i>This application allows you to play a game by searching an artist and then guessing their top songs on Spotify in the US!To begin, please enter your name.</h4>
+        <h4 class="text-info" ng-hide="checkUserValid() || checkUserInvalid()"><i class="fa fa-user-secret"></i>This application allows you to play a game by searching an artist and then guessing their top songs on Spotify in the US! To begin, please enter your name.</h4>
         <h4 class="text-success" ng-show="checkUserValid() && gameState == 'inactive'"><i class="fa fa-user-secret"></i> Hello {{inputName}}. Are you ready to get started?</h4>
         <h4 class="error-text" ng-show="checkUserInvalid() && gameState == 'inactive'"><i class="fa fa-exclamation-triangle"></i> Username must be at least 5 characters.</h4>
         <h4 class="text-info" ng-show="gameState == 'setup' && showInfo == false"><i class="fa fa-user-secret"></i> Please select an artist.</h4>
