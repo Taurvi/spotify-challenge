@@ -34,9 +34,7 @@
 </head>
 <body>
 <main class="container-fluid" ng-app="spotifyApp" ng-controller="primary">
-    <div class="text-center"><h1>Cool Spotify App - Under Construction</h1><br/>
-        <i class="fa fa-spotify fa-5x fa-spin"></i><br/>
-        <h6>SOON&trade;</h6>
+    <div class="text-center"><h1>Cool Spotify App - Under Construction</h1>
     </div>
 
     <div class="text-center center-block" id="info-box">
@@ -45,9 +43,10 @@
         <h4 class="error-text" ng-show="checkUserInvalid() && gameState == 'inactive'"><i class="fa fa-exclamation-triangle"></i> Username must be at least 5 characters.</h4>
         <h4 class="text-info" ng-show="gameState == 'setup' && showInfo == false"><i class="fa fa-user-secret"></i> Please select an artist.</h4>
         <h4 class="text-success" ng-show="gameState == 'setup' && showInfo == true"><i class="fa fa-user-secret"></i> You have selected: {{selectedArtist}}! Let's begin!</h4>
+        <h4 class="text-success" ng-show="gameState == 'active'"><i class="fa fa-user-secret"></i> You can only listen to each segment of a song once!</h4>
     </div>
 
-    <!-- gameState == Active -->
+    <!-- gameState == inactive -->
     <form class="form text-center" role="form" name="formSetup" ng-show="gameState == 'inactive'" novalidate="true">
         <div class="row">
             <div class="col-xs-5 form-group center-block" ng-class="{'has-error' : checkUserInvalid(), 'has-success' : checkUserValid()}">
@@ -61,17 +60,17 @@
         </div>
         <div class="row">
             <div class="col-xs-5 center-block">
-                <button type="button" class="btn btn-default btn-lg" ng-click="startGame()" ng-disabled="(checkUserInvalid() || !formSetup.username.length) && !checkUserValid()" ng-class="{'btn-success' : (!checkUserInvalid() || formSetup.username.length) && checkUserValid()}">
+                <button type="button" class="btn btn-default btn-lg" ng-click="setupGame()" ng-disabled="(checkUserInvalid() || !formSetup.username.length) && !checkUserValid()" ng-class="{'btn-success' : (!checkUserInvalid() || formSetup.username.length) && checkUserValid()}">
                     <span class="glyphicon glyphicon-play"></span> Play Game
                 </button>
                 <button type="button" class="btn btn-default btn-lg btn-primary">
                     <span class="glyphicon glyphicon-sort-by-attributes"></span> Top Scores
-                    </button>
+                </button>
             </div>
         </div>
     </form>
 
-    <!-- gameState == Setup -->
+    <!-- gameState == setup -->
     <form class="form text-center" role="form" name="formSearchArtist" ng-show="gameState == 'setup'" novalidate="true">
         <div class="row">
             <div class="col-xs-5 form-group center-block">
@@ -100,6 +99,39 @@
             </div>
         </div>
     </form>
+
+    <!-- gameState == start -->
+
+    <form class="form text-center" role="form" name="formGuessSong" ng-show="gameState == 'active'" novalidate="true">
+        <div class="row">
+            <div class="col-xs-5 form-group center-block">
+                <table class="table-responsive table-striped table-bordered" id="game-board">
+                    <tr>
+                        <th>Play Song</th>
+                        <th>Guess</th>
+                        <th class="gameAnswer">Answer</th>
+                    </tr>
+                    <tr ng-repeat="element in returnTopSongs">
+                        <td>
+                            <button type="button" class="btn btn-default btn-md btn-primary btn-success" ng-attr-id="button-{{element.id}}" ng-click="playSong(element.preview_url, element.id)">
+                                <span class="glyphicon glyphicon-play"></span>
+                            </button>
+                        </td>
+                        <td><input type="text" ng-attr-id="input-{{element.id}}"></td>
+                        <td class="gameAnswer">{{element.name}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="check-answers" ng-show="gameState == 'active'">
+            <button type="button" class="btn btn-default btn-lg" ng-click="">
+                Submit Answers
+            </button>
+        </div>
+    </form>
+
+
 </main>
 </body>
 </html>

@@ -10,9 +10,30 @@ if (debugMode)
     debugMsg('Debug Mode Active!')
 
 // Global Vars
-var revisedList = [];
-var truncatedList = [];
-var checkNewList;
+var dispTopSongs = [];
+var randomTopSongs = [];
+var testArray = [];
+var testArrayS = [];
+
+// Shuffle Function
+var shuffle = function(array) {
+    debugMsg("shuffle run!");
+    var m = array.length, t, i;
+
+    // While there remain elements to shuffle…
+    while (m) {
+
+        // Pick a remaining element…
+        i = Math.floor(Math.random() * m--);
+
+        // And swap it with the current element.
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+    }
+
+    return array;
+}
 
 // Create Angular App
 var ngApp = angular.module('spotifyApp', ['spotify']);
@@ -32,7 +53,7 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
     $scope.showInfo = false;
 
     // When game start is clicked
-    $scope.startGame = function() {
+    $scope.setupGame = function() {
         $scope.userName = $scope.inputName;
         $scope.gameState = 'setup';
     };
@@ -59,7 +80,8 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
         }
         //  Searches the spotify database for the artist
         Spotify.search($scope.inputArtist, 'artist', {limit: 10}).then( function(data) {
-            truncatedList = [];
+            $scope.dispArtistList = [];
+            var truncatedList = [];
             data.artists.items.forEach( function(artist) {
                 rawTopTen = [];
                 Spotify.getArtistTopTracks(artist.id, 'US').then(function (data) {
@@ -74,6 +96,7 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
         });
     };
 
+    // Select Artist
     $scope.artistSelected = function(artistName, artistId) {
         //  Used for showing the selected table row
         $scope.selectedArtistedId = artistId;
@@ -86,6 +109,37 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
             //  Stores artist's top tracks
             $scope.returnTopSongs = data.tracks;
         });
+    }
+
+    // Start Game
+    $scope.startGame = function() {
+        $scope.gameState = 'active';
+        shuffle($scope.returnTopSongs);
+        dispTopSongs = $scope.returnTopSongs;
+    }
+
+    $scope.buttonId = function(id) {
+        debugMsg(id.substring(0,5))
+        return id.substring(0,5);
+    }
+
+    $scope.audioObject = {}
+
+    $scope.playSong = function(song, id) {
+        var buttonId = '#button-' + id;
+        debugMsg(buttonId);
+        $(buttonId).attr('disabled', true);
+        if($scope.currentSong == song) {
+            $scope.audioObject.pause()
+            $scope.currentSong = false
+            return
+        }
+        else {
+            if($scope.audioObject.pause != undefined) $scope.audioObject.pause()
+            $scope.audioObject = new Audio(song);
+            $scope.audioObject.play()
+            $scope.currentSong = song
+        }
     }
 }]);
 

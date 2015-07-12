@@ -34,3 +34,10 @@ td, th {
 #start-button {
     margin-bottom: 15px;
 }
+
+#game-board td, #game-board th {
+    width: 33%;
+}
+
+.gameAnswer {
+}
