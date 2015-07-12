@@ -40,6 +40,8 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
 
     $scope.showInfo = false;
 
+    $scope.audioObject = {}
+
     // When game start is clicked
     $scope.setupGame = function() {
         $scope.userName = $scope.inputName;
@@ -110,7 +112,7 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
         return id.substring(0,5);
     }
 
-    $scope.audioObject = {}
+
 
     $scope.playSong = function(song, id) {
         var buttonId = '#button-' + id;
@@ -122,7 +124,8 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
             return
         }
         else {
-            if($scope.audioObject.pause != undefined) $scope.audioObject.pause()
+            if($scope.audioObject.pause != undefined)
+                $scope.audioObject.pause()
             $scope.audioObject = new Audio(song);
             $scope.audioObject.play()
             $scope.currentSong = song
@@ -130,6 +133,8 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
     }
 
     $scope.checkAnswers = function() {
+        if($scope.audioObject.pause != undefined)
+            $scope.audioObject.pause()
         $scope.gameState = 'end';
         var idArray = [];
         var answerList = {};
