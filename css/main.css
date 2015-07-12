@@ -35,9 +35,10 @@ td, th {
     margin-bottom: 15px;
 }
 
-#game-board td, #game-board th {
+#game-board td{
     width: 33%;
 }
 
 .gameAnswer {
+    display: none;
 }

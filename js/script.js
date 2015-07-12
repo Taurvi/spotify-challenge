@@ -1,4 +1,4 @@
-var debugMode = true;
+var debugMode = false;
 
 // Debug Function
 var debugMsg = function(msg) {
@@ -141,6 +141,42 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
             $scope.currentSong = song
         }
     }
+
+    $scope.checkAnswers = function() {
+        $scope.gameState = 'end';
+        var idArray = [];
+        var answerList = {};
+        $(".gameAnswer").css('display', 'initial');
+        for(song in $scope.returnTopSongs) {
+            var songId = $scope.returnTopSongs[song].id;
+            $('#input-' + songId).prop('readonly', true);
+            var userAnswer = $('#input-' + songId).val();
+            var corAnswer = $scope.returnTopSongs[song].name;
+            var correct = evalAnswer(userAnswer, corAnswer);
+            if (correct)
+                $('#formG-' + songId).addClass('has-success');
+            else
+                $('#formG-' + songId).addClass('has-error');
+        }
+    }
+
+    $scope.reset = function() {
+        $scope.inputArtist = '';
+        $scope.dispArtistList = [];
+        $scope.selectedArtist = '';
+        $scope.showInfo = false;
+        $(".gameAnswer").css('display', 'none');
+        $scope.gameState = 'setup';
+    }
 }]);
+
+var evalAnswer = function(str, ans) {
+    var filterStr = str.replace(/[^A-Za-z]+/g, "").toLowerCase();
+    var filterAns = ans.replace(/[^A-Za-z]+/g, "").toLowerCase();
+    debugMsg(filterStr);
+    debugMsg(filterAns);
+
+    return filterStr == filterAns;
+}
 
 // Kinda works: return (() || ($scope.formSetup.username.$touched && ));
