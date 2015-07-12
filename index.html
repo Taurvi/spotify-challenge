@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{Insert Cool Title Here}</title>
+    <title>Spotify - Artist Guessing Game</title>
 
     <!-- JQuery 2.1.4 -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -63,9 +63,6 @@
                 <button type="button" class="btn btn-default btn-lg" ng-click="setupGame()" ng-disabled="(checkUserInvalid() || !formSetup.username.length) && !checkUserValid()" ng-class="{'btn-success' : (!checkUserInvalid() || formSetup.username.length) && checkUserValid()}">
                     <span class="glyphicon glyphicon-play"></span> Play Game
                 </button>
-                <button type="button" class="btn btn-default btn-lg btn-primary">
-                    <span class="glyphicon glyphicon-sort-by-attributes"></span> Top Scores
-                </button>
             </div>
         </div>
     </form>
@@ -102,31 +99,33 @@
 
     <!-- gameState == start -->
 
-    <form class="form text-center" role="form" name="formGuessSong" ng-show="gameState == 'active'" novalidate="true">
+    <form class="form text-center" role="form" name="formGuessSong" ng-show="gameState == 'active' || gameState == 'end'" novalidate="true">
         <div class="row">
             <div class="col-xs-5 form-group center-block">
                 <table class="table-responsive table-striped table-bordered" id="game-board">
-                    <tr>
-                        <th>Play Song</th>
-                        <th>Guess</th>
-                        <th class="gameAnswer">Answer</th>
-                    </tr>
                     <tr ng-repeat="element in returnTopSongs">
                         <td>
                             <button type="button" class="btn btn-default btn-md btn-primary btn-success" ng-attr-id="button-{{element.id}}" ng-click="playSong(element.preview_url, element.id)">
                                 <span class="glyphicon glyphicon-play"></span>
                             </button>
                         </td>
-                        <td><input type="text" ng-attr-id="input-{{element.id}}"></td>
-                        <td class="gameAnswer">{{element.name}}</td>
+                        <td>
+                            <div class="form-group" ng-attr-id="formG-{{element.id}}">
+                                <input type="text" class="form-control" ng-attr-id="input-{{element.id}}">
+                            </div>
+                        </td>
+                        <td><span class="gameAnswer">{{element.name}}</span></td>
                     </tr>
                 </table>
             </div>
         </div>
 
-        <div id="check-answers" ng-show="gameState == 'active'">
-            <button type="button" class="btn btn-default btn-lg" ng-click="">
+        <div id="check-answers" ng-show="gameState == 'active' || gameState == 'end' ">
+            <button type="button" class="btn btn-default btn-lg" ng-click="checkAnswers()" ng-show="gameState == 'active'">
                 Submit Answers
+            </button>
+            <button type="button" class="btn btn-default btn-lg btn-primary" ng-show="gameState == 'end'" ng-click="reset()">
+                <span class="glyphicon glyphicon-repeat"></span> Start Over
             </button>
         </div>
     </form>
