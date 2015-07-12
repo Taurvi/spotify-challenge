@@ -9,24 +9,12 @@ var debugMsg = function(msg) {
 if (debugMode)
     debugMsg('Debug Mode Active!')
 
-// Global Vars
-var dispTopSongs = [];
-var randomTopSongs = [];
-var testArray = [];
-var testArrayS = [];
-
-// Shuffle Function
+// Shuffle Function - Knuth-Yates shuffle (http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
 var shuffle = function(array) {
     debugMsg("shuffle run!");
     var m = array.length, t, i;
-
-    // While there remain elements to shuffle…
     while (m) {
-
-        // Pick a remaining element…
         i = Math.floor(Math.random() * m--);
-
-        // And swap it with the current element.
         t = array[m];
         array[m] = array[i];
         array[i] = t;
@@ -115,7 +103,6 @@ ngApp.controller('primary', ['$scope', '$http', 'Spotify', function($scope, $htt
     $scope.startGame = function() {
         $scope.gameState = 'active';
         shuffle($scope.returnTopSongs);
-        dispTopSongs = $scope.returnTopSongs;
     }
 
     $scope.buttonId = function(id) {
